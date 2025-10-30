@@ -1,4 +1,3 @@
-// src/MainContent.jsx
 import React from 'react';
 
 function MainContent() {
