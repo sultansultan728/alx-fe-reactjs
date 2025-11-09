@@ -1,16 +1,16 @@
 import React from 'react';
-import Header from './Header';
-import UserProfile from './UserProfile';
-import MainContent from './MainContent';
-import Footer from './Footer';
+import Header from './components/Header';
+import UserProfile from './components/UserProfile';
+import MainContent from './components/MainContent';
+import Footer from './components/Footer';
+import Counter from './components/Counter'; // ✅ Import Counter
 
 function App() {
   return (
     <div>
       <Header />
-      <UserProfile name="Alice" age={28} bio="Loves traveling and photography." />
-      <UserProfile name="Bob" age={32} bio="Enjoys hiking and outdoor adventures." />
       <MainContent />
+      <Counter /> {/* ✅ Add Counter component here */}
       <Footer />
     </div>
   );
