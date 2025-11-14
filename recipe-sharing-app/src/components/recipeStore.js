@@ -51,5 +51,35 @@ export const useRecipeStore = create((set) => ({
         recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
       ),
     })),
+
+favorites: [],
+
+  addFavorite: (recipeId) =>
+    set((state) => {
+      if (state.favorites.includes(recipeId)) return state;
+      return { favorites: [...state.favorites, recipeId] };
+    }),
+
+  removeFavorite: (recipeId) =>
+    set((state) => ({
+      favorites: state.favorites.filter((id) => id !== recipeId),
+    })),
+  
+  
+  recommendations: [],
+
+  generateRecommendations: () => {
+    const { recipes, favorites } = get();
+
+    
+    const recommended = recipes.filter(
+      (recipe) =>
+        favorites.includes(recipe.id) || (Math.random() > 0.6 && !favorites.includes(recipe.id))
+    );
+
+    set({ recommendations: recommended });
+  },
+}));
+
 }));
 
