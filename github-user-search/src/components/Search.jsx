@@ -19,7 +19,8 @@ const Search = () => {
       const data = await fetchUserData(username);
       setUserData(data);
     } catch (err) {
-      setError("Looks like we can't find the user");
+      // REQUIRED exact message
+      setError("Looks like we cant find the user");
     } finally {
       setLoading(false);
     }
@@ -38,14 +39,17 @@ const Search = () => {
       </form>
 
       {/* Conditional Rendering */}
+
       {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+
+      {error && <p>{error}</p>}  
+      {/* This will show: Looks like we cant find the user */}
 
       {userData && (
         <div className="user-result">
           <img
             src={userData.avatar_url}
-            alt="User Avatar"
+            alt="avatar"
             width="100"
             style={{ borderRadius: "50%" }}
           />
