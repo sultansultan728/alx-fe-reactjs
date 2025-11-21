@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { searchUsers } from "../services/githubService";
 import { fetchUserData, searchUsers } from "../services/githubService";
 
 const Search = () => {
@@ -14,21 +13,30 @@ const Search = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!username && !location && !minRepos) return;
+
     setLoading(true);
     setError("");
     setResults([]);
+    setPage(1);
 
     try {
-      const { users, hasMorePages } = await searchUsers({
-        username,
-        location,
-        minRepos,
-        page: 1
-      });
-
-      setResults(users);
-      setHasMore(hasMorePages);
-      setPage(1);
+      // If only username is provided, use fetchUserData (Task 1)
+      if (username && !location && !minRepos) {
+        const data = await fetchUserData(username);
+        setResults([data]); // wrap in array for consistency
+        setHasMore(false);
+      } else {
+        // Advanced search (Task 2)
+        const { users, hasMorePages } = await searchUsers({
+          username,
+          location,
+          minRepos,
+          page: 1,
+        });
+        setResults(users);
+        setHasMore(hasMorePages);
+      }
     } catch (err) {
       setError("Looks like we cant find the user");
     } finally {
@@ -45,10 +53,9 @@ const Search = () => {
         username,
         location,
         minRepos,
-        page: nextPage
+        page: nextPage,
       });
-
-      setResults(prev => [...prev, ...users]);
+      setResults((prev) => [...prev, ...users]);
       setHasMore(hasMorePages);
       setPage(nextPage);
     } catch (err) {
@@ -59,55 +66,54 @@ const Search = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-
+    <div className="max-w-3xl mx-auto p-6">
       {/* SEARCH FORM */}
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded-lg p-6 space-y-4"
       >
-        <h2 className="text-xl font-semibold mb-2">Advanced GitHub User Search</h2>
+        <h2 className="text-2xl font-bold text-gray-800">GitHub User Search</h2>
 
         <input
           type="text"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
         <input
           type="text"
-          placeholder="Location (e.g., Nairobi)"
+          placeholder="Location (optional)"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
         <input
           type="number"
-          placeholder="Minimum repositories"
+          placeholder="Minimum Repositories (optional)"
           value={minRepos}
           onChange={(e) => setMinRepos(e.target.value)}
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
         >
           Search
         </button>
       </form>
 
-      {/* CONDITIONAL UI */}
+      {/* LOADING & ERROR */}
       <div className="mt-6">
-        {loading && <p>Loading...</p>}
+        {loading && <p className="text-gray-700">Loading...</p>}
         {error && <p className="text-red-500">{error}</p>}
       </div>
 
       {/* RESULTS */}
-      <div className="space-y-4 mt-4">
+      <div className="space-y-4 mt-6">
         {results.map((user) => (
           <div
             key={user.id}
@@ -118,14 +124,17 @@ const Search = () => {
               alt="avatar"
               className="w-16 h-16 rounded-full mr-4"
             />
-
             <div>
-              <h3 className="text-lg font-bold">{user.login}</h3>
+              <h3 className="text-lg font-semibold">{user.name || user.login}</h3>
+              {user.location && <p className="text-gray-600">Location: {user.location}</p>}
+              {user.public_repos !== undefined && (
+                <p className="text-gray-600">Repos: {user.public_repos}</p>
+              )}
               <a
                 href={user.html_url}
-                className="text-blue-600 underline"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="text-blue-600 underline"
               >
                 View Profile
               </a>
@@ -136,7 +145,7 @@ const Search = () => {
         {hasMore && (
           <button
             onClick={loadMore}
-            className="w-full bg-gray-800 text-white py-2 rounded hover:bg-black"
+            className="w-full bg-gray-800 text-white py-2 rounded hover:bg-black transition"
           >
             Load More
           </button>
