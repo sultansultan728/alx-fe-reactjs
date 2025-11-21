@@ -1,5 +1,13 @@
 import axios from "axios";
 
+// Task 1: Basic fetch by username
+export const fetchUserData = async (username) => {
+  const url = `https://api.github.com/users/${username}`;
+  const response = await axios.get(url);
+  return response.data;
+};
+
+// Task 2: Advanced search with query parameters
 export const searchUsers = async ({ username, location, minRepos, page }) => {
   let query = "";
 
