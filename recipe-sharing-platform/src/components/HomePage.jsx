@@ -32,8 +32,8 @@ export default function HomePage() {
               <h2 className="text-xl font-semibold mb-2">{recipe.title}</h2>
               <p className="text-gray-600 mb-4">{recipe.summary}</p>
 
-              <a
-                href={`/recipes/${recipe.id}`}
+              <Link
+                to={"/recipe/" + recipe.id}
                 className="text-blue-600 font-medium hover:underline"
               >
                 View Recipe →
