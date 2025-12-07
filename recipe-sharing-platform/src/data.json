@@ -4,18 +4,58 @@
     "title": "Spaghetti Carbonara",
     "summary": "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
     "image": "https://via.placeholder.com/300"
+    "ingredients": [
+      "250g spaghetti",
+      "150g bacon",
+      "3 eggs",
+      "40g Parmesan cheese",
+      "Salt & pepper"
+    ]
+     "instructions": [
+      "Boil spaghetti until al dente.",
+      "Cook bacon until crispy.",
+      "Whisk eggs and cheese in a bowl.",
+      "Combine everything and season with pepper."
+    ]
   },
   {
     "id": 2,
     "title": "Chicken Tikka Masala",
     "summary": "Chunks of grilled chicken cooked in a buttery and creamy tomato-based gravy.",
     "image": "https://via.placeholder.com/300"
+    "ingredients": [
+      "700g chicken breast",
+      "1 cup tomato puree",
+      "1 cup cream",
+      "Spices (garam masala, turmeric, cumin)",
+      "Salt & pepper"
+    ],
+    "instructions": [
+      "Marinate chicken with spices and yogurt.",
+      "Grill or fry the chicken.",
+      "Make sauce with tomato puree, cream, and spices.",
+      "Add chicken and simmer for 10 minutes."
+    ]
   },
   {
     "id": 3,
     "title": "Beef Stir Fry",
     "summary": "Quick and colorful Asian-style beef and vegetable stir fry.",
     "image": "https://via.placeholder.com/300"
+    "ingredients": [
+      "2 tablespoons vegetable oil",
+      "1 pound beef sirloin, cut into 2-inch strips",
+      "2 carrots, thinly sliced",
+      "2 tablespoons soy sauce",
+      "2 tablespoons sesame seeds, toasted"
+    ],
+    "instructions": [
+      "Heat vegetable oil in a large wok or skillet over medium-high heat",
+      "add beef and stir-fry until browned, 3 to 4 minutes.",
+      "Add vegetables",
+      "Stir beef into vegetables and season with soy sauce and sesame seeds"
+    ]
   }
+
 ]
 
